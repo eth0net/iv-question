@@ -1,4 +1,5 @@
 <?php
+
 namespace JDI\Helper;
 
 class PathBuilder
@@ -13,7 +14,21 @@ class PathBuilder
    */
   public static function custom($separator, array $pathComponents)
   {
-    //TODO: Return path as string
+    $path = "";
+
+    foreach ($pathComponents as $component) {
+      if ($component === "" || $component === NULL) continue;
+
+      $pathHasSeparator = substr($path, -1) == $separator;
+      $componentHasSeparator = substr($component, 0, 1) == $separator;
+
+      if ($path && !$pathHasSeparator) $path .= $separator;
+      if ($path && $componentHasSeparator) $component = substr($component, 1);
+
+      $path .= $component;
+    }
+
+    return $path;
   }
 
   /**
